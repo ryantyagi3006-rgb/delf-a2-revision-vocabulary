@@ -73,7 +73,15 @@
 <div id="page-home" class="page active">
   <h1>DELF A2 — Master Resources</h1>
   <p class="subtitle">Not affiliated with DELF / Alliance Française. Educational use only.</p>
-
+<!-- WEEK -->
+<div id="page-week" class="page">
+  <button class="btn back" onclick="show('home')">← Back</button>
+  <h1 id="week-title"></h1>
+  <p class="subtitle" id="week-theme"></p>
+  <div id="day-list"></div>
+  <hr class="divider">
+  <button class="btn primary" onclick="startQuiz()">Take the Weekly Quiz →</button>
+</div>
   <!-- RESOURCES -->
   <section class="resources">
     <h2>Revision Resources</h2>
@@ -102,16 +110,6 @@
 
 </body>
 </html>
-
-<!-- WEEK -->
-<div id="page-week" class="page">
-  <button class="btn back" onclick="show('home')">← Back</button>
-  <h1 id="week-title"></h1>
-  <p class="subtitle" id="week-theme"></p>
-  <div id="day-list"></div>
-  <hr class="divider">
-  <button class="btn primary" onclick="startQuiz()">Take the Weekly Quiz →</button>
-</div>
 
 <!-- DAY -->
 <div id="page-day" class="page">
