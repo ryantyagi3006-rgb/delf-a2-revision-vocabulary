@@ -73,6 +73,7 @@
 <div id="page-home" class="page active">
   <h1>DELF A2 — Master Resources</h1>
   <p class="subtitle">Not affiliated with DELF / Alliance Française. Educational use only.</p>
+
 <!-- WEEK -->
 <div id="page-week" class="page">
   <button class="btn back" onclick="show('home')">← Back</button>
@@ -85,31 +86,19 @@
   <!-- RESOURCES -->
   <section class="resources">
     <h2>Revision Resources</h2>
-
-    <a class="btn"
-       href="https://drive.google.com/file/d/1cyz_dcd-l5skeLlOsLLcaS2z-PtLhOPI/view?usp=sharing"
-       target="_blank" rel="noopener">
-      Conjugations
-    </a>
-
-    <a class="btn"
-       href="https://drive.google.com/drive/folders/17-c2Gl5WDA5GVBBGZynJP3SuYFilg6Qm"
-       target="_blank" rel="noopener">
-      Book
-    </a>
-
-    <a class="btn"
-       href="https://ryantyagi3006-rgb.github.io/delf-a2-revision-vocabulary/resources/exemple-3-sujet-delf-a2-junior-document-candidat-comprehension-ecrite-orale-production-ecrite.pdf"
-       target="_blank" rel="noopener">
-      Sample Paper
-    </a>
-  </section>
-
-  <div id="week-list"></div>
-</div>
-
+@@ -103,601 +111,591 @@
 </body>
 </html>
+
+<!-- WEEK -->
+<div id="page-week" class="page">
+  <button class="btn back" onclick="show('home')">← Back</button>
+  <h1 id="week-title"></h1>
+  <p class="subtitle" id="week-theme"></p>
+  <div id="day-list"></div>
+  <hr class="divider">
+  <button class="btn primary" onclick="startQuiz()">Take the Weekly Quiz →</button>
+</div>
 
 <!-- DAY -->
 <div id="page-day" class="page">
