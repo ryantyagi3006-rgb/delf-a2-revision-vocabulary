@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DELF A2 — Master Resources</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Georgia, serif; background: #f9f9f6; color: #222; line-height: 1.6; }
+
+    /* HEADER */
+    header {
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    header img { height: 44px; }
+    .header-text { display: flex; flex-direction: column; }
+    .header-title { font-size: 1rem; font-weight: bold; color: #1a1a1a; }
+    .header-sub { font-size: 0.75rem; color: #888; }
+
+    /* PAGES */
+    .page { display: none; max-width: 740px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .page.active { display: block; }
+    h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.1rem; margin-bottom: 0.6rem; color: #222; }
+    h3 { font-size: 0.95rem; color: #555; font-weight: normal; font-style: italic; margin-bottom: 0.4rem; }
+    .subtitle { color: #666; font-size: 0.88rem; margin-bottom: 1.5rem; }
+
+    /* TABS */
+    .tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid #ddd; }
+    .tab-btn { background: none; border: none; padding: 0.6rem 1.1rem; cursor: pointer; font-family: Georgia, serif; font-size: 0.9rem; color: #666; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+    .tab-btn:hover { color: #222; }
+    .tab-btn.active { color: #2a4a2a; border-bottom: 2px solid #2a4a2a; font-weight: bold; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* BUTTONS */
+    .btn { display: block; width: 100%; text-align: left; padding: 0.75rem 1rem; margin-bottom: 0.6rem; background: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 0.95rem; font-family: Georgia, serif; color: #222; }
+    .btn:hover { background: #f0f0e8; border-color: #999; }
+    .btn.primary { background: #2a4a2a; color: #fff; border-color: #2a4a2a; }
+    .btn.primary:hover { background: #1d341d; }
+    .btn.back { background: none; border: none; color: #555; padding: 0 0 1.5rem 0; cursor: pointer; font-size: 0.88rem; font-family: Georgia, serif; width: auto; display: inline-block; }
+    .btn.back:hover { color: #222; }
+    .btn.toggle { background: #f5f5ee; border: 1px solid #ccc; color: #2a4a2a; font-size: 0.88rem; padding: 0.4rem 0.8rem; width: auto; display: inline-block; margin-top: 0.5rem; border-radius: 4px; cursor: pointer; font-family: Georgia, serif; }
+    .btn.toggle:hover { background: #e8e8dc; }
+
+    /* TAG */
+    .tag { display: inline-block; font-size: 0.72rem; background: #eee; padding: 0.1rem 0.45rem; border-radius: 10px; margin-left: 0.5rem; color: #666; vertical-align: middle; }
+    .tag.speak { background: #e8f0e8; color: #2a4a2a; }
+    .tag.write { background: #e8eaf0; color: #2a3a5a; }
+    .divider { border: none; border-top: 1px solid #ddd; margin: 1.5rem 0; }
+
+    /* VOCAB */
+    .vocab-section { margin-bottom: 2rem; }
+    .vocab-table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+    .vocab-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid #eee; }
+    .vocab-table td:first-child { font-weight: bold; width: 48%; color: #1a3a1a; }
+    .vocab-table td:last-child { color: #444; }
+
+    /* QUIZ */
+    .quiz-question { margin-bottom: 1.5rem; }
+    .quiz-question p { font-size: 0.97rem; margin-bottom: 0.6rem; font-weight: bold; }
+    .option { display: block; width: 100%; text-align: left; padding: 0.55rem 0.9rem; margin-bottom: 0.4rem; background: #fff; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 0.92rem; font-family: Georgia, serif; color: #222; }
+    .option:hover:not(:disabled) { background: #f0f0e8; }
+    .option.correct { background: #e6f4e6; border-color: #4a844a; color: #1a3a1a; }
+    .option.wrong { background: #faeaea; border-color: #c44; color: #600; }
+    .option.selected-opt { border-color: #888; background: #f5f5ee; }
+    .option:disabled { cursor: default; }
+    #quiz-result { font-size: 1rem; margin-top: 1rem; padding: 1rem; background: #fff; border: 1px solid #ccc; border-radius: 4px; }
+
+    /* SPEAKING / WRITING CARDS */
+    .practice-card { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 1.25rem; margin-bottom: 1.25rem; }
+    .practice-card h3 { font-style: normal; font-weight: bold; font-size: 0.95rem; color: #1a1a1a; margin-bottom: 0.3rem; }
+    .practice-card .card-meta { font-size: 0.8rem; color: #888; margin-bottom: 0.75rem; }
+    .practice-card p { font-size: 0.92rem; color: #333; margin-bottom: 0.5rem; }
+    .card-label { font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin: 0.75rem 0 0.25rem 0; }
+    .phrase-list { list-style: none; padding: 0; margin: 0 0 0.5rem 0; }
+    .phrase-list li { font-size: 0.88rem; padding: 0.2rem 0; border-bottom: 1px solid #f0f0e8; color: #2a4a2a; }
+    .phrase-list li span { color: #666; font-style: italic; }
+    .model-answer { display: none; margin-top: 0.75rem; background: #f9f9f6; border-left: 3px solid #2a4a2a; padding: 0.75rem 1rem; font-size: 0.88rem; line-height: 1.65; color: #333; }
+    .model-answer.visible { display: block; }
+    .examiner-q { background: #f5f5ee; border-radius: 4px; padding: 0.6rem 0.9rem; margin-bottom: 0.4rem; font-size: 0.88rem; color: #333; font-style: italic; }
+    .examiner-q::before { content: "Examiner: "; font-weight: bold; font-style: normal; color: #555; }
+    .tip-box { background: #f0f4f0; border: 1px solid #c8dcc8; border-radius: 4px; padding: 0.7rem 1rem; margin-top: 0.75rem; font-size: 0.85rem; color: #2a4a2a; }
+    .tip-box::before { content: "Tip — "; font-weight: bold; }
+    .scenario-box { background: #fff8e8; border: 1px solid #e0d080; border-radius: 4px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; font-size: 0.9rem; color: #444; }
+    .writing-prompt { background: #f0f4ff; border: 1px solid #b8c8e8; border-radius: 4px; padding: 0.75rem 1rem; margin-bottom: 0.75rem; font-size: 0.9rem; color: #333; }
+    .criteria { font-size: 0.82rem; color: #666; margin-top: 0.5rem; }
+    .criteria span { color: #2a4a2a; font-weight: bold; }
+
+    /* RESOURCES */
+    .resource-group { margin-bottom: 1.5rem; }
+    .resource-group h2 { margin-bottom: 0.4rem; font-size: 1rem; }
+    .resource-group p { font-size: 0.85rem; color: #666; margin-bottom: 0.6rem; }
+    .resource-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.65rem 0.9rem; background: #fff; border: 1px solid #ddd; border-radius: 4px; color: #222; text-decoration: none; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .resource-link:hover { background: #f0f0e8; border-color: #999; }
+    .resource-link .icon { font-size: 1rem; min-width: 1.2rem; }
+    .resource-link .link-text { flex: 1; }
+    .resource-link .link-sub { display: block; font-size: 0.75rem; color: #888; }
+
+    footer { text-align: center; font-size: 0.78rem; color: #aaa; padding: 2rem 1rem; border-top: 1px solid #eee; margin-top: 2rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Alliance_fran%C3%A7aise_logo.svg" alt="Alliance Française" onerror="this.style.display='none'">
+  <div class="header-text">
+    <span class="header-title">DELF A2 — Master Resources</span>
+    <span class="header-sub">Not affiliated with DELF / Alliance Française · Educational use only</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════ HOME ═══════════════════════════════ -->
+<div id="page-home" class="page active">
+  <h1>DELF A2 — Master Resources</h1>
+  <p class="subtitle">Vocabulary · Speaking · Writing · Resources</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('vocab')">Vocabulary</button>
+    <button class="tab-btn" onclick="switchTab('speaking')">Speaking</button>
+    <button class="tab-btn" onclick="switchTab('writing')">Writing</button>
+    <button class="tab-btn" onclick="switchTab('resources')">Resources</button>
+  </div>
+
+  <!-- TAB: VOCABULARY -->
+  <div id="tab-vocab" class="tab-content active">
+    <h2>6-Week Vocabulary Plan</h2>
+    <p class="subtitle">Click a week to view daily word lists and take the weekly quiz.</p>
+    <div id="week-list"></div>
+  </div>
+
+  <!-- TAB: SPEAKING -->
+  <div id="tab-speaking" class="tab-content">
+    <h2>Speaking Practice</h2>
+    <p class="subtitle">Three exam-style exercises. Read the prompt, prepare your response, then reveal the model answer.</p>
+
+    <!-- Speaking 1 -->
+    <div class="practice-card">
+      <h3>Practice 1 — Entretien dirigé <span class="tag speak">Guided Interview</span></h3>
+      <div class="card-meta"> 2–3 minutes · No preparation time · Speak spontaneously</div>
+      <p>The examiner will ask you questions about yourself. Answer in full sentences using simple, clear French.</p>
+      <div class="card-label">Examiner Questions</div>
+      <div class="examiner-q">Comment tu t'appelles et quel âge tu as ?</div>
+      <div class="examiner-q">Tu habites où ? Décris ta ville ou ton quartier.</div>
+      <div class="examiner-q">Tu as des frères et sœurs ? Parle de ta famille.</div>
+      <div class="examiner-q">Qu'est-ce que tu aimes faire pendant ton temps libre ?</div>
+      <div class="examiner-q">Quelle est ta matière préférée à l'école ? Pourquoi ?</div>
+      <div class="card-label">Useful Phrases</div>
+      <ul class="phrase-list">
+        <li>Je m'appelle… et j'ai… ans. <span>My name is… and I am… years old.</span></li>
+        <li>J'habite à… depuis… ans. <span>I have lived in… for… years.</span></li>
+        <li>Dans ma famille, il y a… <span>In my family, there is/are…</span></li>
+        <li>Pendant mon temps libre, j'aime… <span>In my free time, I like to…</span></li>
+        <li>Ma matière préférée, c'est… parce que… <span>My favourite subject is… because…</span></li>
+      </ul>
+      <div class="tip-box">Use connectors: <em>d'abord, ensuite, aussi, parce que, mais</em>. Aim for 2–3 sentences per answer.</div>
+      <button class="btn toggle" onclick="toggleModel(this)">Show Model Answer</button>
+      <div class="model-answer">
+        <strong>Sample response:</strong><br><br>
+        Je m'appelle Léa et j'ai quinze ans. J'habite à Lyon depuis toujours, dans un quartier calme près du centre-ville. Dans ma famille, il y a mes parents, mon frère Thomas qui a douze ans et moi. Pendant mon temps libre, j'aime lire des romans et jouer au tennis avec mes amis. Ma matière préférée, c'est l'anglais, parce que j'adore apprendre de nouvelles langues et le professeur est très sympa.
+      </div>
+    </div>
+
+    <!-- Speaking 2 -->
+    <div class="practice-card">
+      <h3>Practice 2 — Monologue suivi <span class="tag speak">Prepared Monologue</span></h3>
+      <div class="card-meta"> 2 minutes speaking · 3 minutes preparation</div>
+      <div class="scenario-box">
+        <strong>Topic:</strong> Describe the photo below in your own words. Say who you can see, where they are, what they are doing, and what you think about the scene.<br><br>
+        <em>[Imagine a photo: a family having a picnic in a park. There are two children playing, parents sitting on a blanket, food on the ground, sunshine.]</em>
+      </div>
+      <div class="card-label">What to include</div>
+      <ul class="phrase-list">
+        <li>Who is in the photo <span>people, ages, relationships</span></li>
+        <li>Where the scene takes place <span>setting, time of day</span></li>
+        <li>What everyone is doing <span>actions, activities</span></li>
+        <li>How the people seem to feel <span>emotions, atmosphere</span></li>
+        <li>Your personal reaction <span>what you like or find interesting</span></li>
+      </ul>
+      <div class="card-label">Useful Phrases</div>
+      <ul class="phrase-list">
+        <li>Sur la photo, je vois… <span>In the photo, I can see…</span></li>
+        <li>Il me semble que… / On dirait que… <span>It seems that…</span></li>
+        <li>À gauche / à droite / au premier plan… <span>On the left / right / in the foreground…</span></li>
+        <li>Je pense que c'est… parce que… <span>I think it is… because…</span></li>
+        <li>L'atmosphère est… / Les gens semblent… <span>The atmosphere is… / The people seem…</span></li>
+      </ul>
+      <div class="tip-box">Don't just list what you see — give your opinion and use adjectives to describe feelings and atmosphere.</div>
+      <button class="btn toggle" onclick="toggleModel(this)">Show Model Answer</button>
+      <div class="model-answer">
+        <strong>Sample response:</strong><br><br>
+        Sur cette photo, je vois une famille qui fait un pique-nique dans un parc. Il y a deux enfants qui jouent sur l'herbe — je pense qu'ils ont environ sept ou huit ans. Leurs parents sont assis sur une couverture et parlent ensemble. On peut voir de la nourriture sur le sol : du pain, des fruits et des bouteilles d'eau. Il fait beau et il y a du soleil. L'atmosphère est très agréable et détendue. Cette photo me fait penser aux vacances en famille. J'aime beaucoup ce genre de moments parce que c'est important de passer du temps ensemble.
+      </div>
+    </div>
+
+    <!-- Speaking 3 -->
+    <div class="practice-card">
+      <h3>Practice 3 — Exercice en interaction <span class="tag speak">Role Play</span></h3>
+      <div class="card-meta"> 3–4 minutes · 3 minutes preparation</div>
+      <div class="scenario-box">
+        <strong>Scenario:</strong> You are at a tourist office in Paris. You want to find activities for the weekend. Ask the examiner (playing the tourist office employee) about opening times, prices, and how to get there. Use the prompts on your card to guide the conversation.
+      </div>
+      <div class="card-label">Your Card — Things to ask about</div>
+      <ul class="phrase-list">
+        <li>A museum or monument to visit <span>opening hours?</span></li>
+        <li>The price of entry <span>is there a reduction for students?</span></li>
+        <li>How to get there by public transport <span>which bus or metro?</span></li>
+        <li>Is there a restaurant or café nearby?</li>
+        <li>Ask for a map or leaflet</li>
+      </ul>
+      <div class="card-label">Useful Phrases</div>
+      <ul class="phrase-list">
+        <li>Bonjour, je voudrais des informations sur… <span>I would like information about…</span></li>
+        <li>C'est ouvert le dimanche ? À quelle heure ? <span>Is it open on Sunday? At what time?</span></li>
+        <li>Quel est le prix d'entrée ? <span>What is the entry price?</span></li>
+        <li>Il y a une réduction pour les étudiants ? <span>Is there a student discount?</span></li>
+        <li>Comment est-ce qu'on y va en métro ? <span>How do we get there by metro?</span></li>
+        <li>Est-ce qu'il y a un café près d'ici ? <span>Is there a café nearby?</span></li>
+        <li>Vous avez un plan / une brochure ? <span>Do you have a map / leaflet?</span></li>
+      </ul>
+      <div class="tip-box">Start with a greeting and end politely (<em>merci, au revoir</em>). React to what the "examiner" says — don't just recite your list.</div>
+      <button class="btn toggle" onclick="toggleModel(this)">Show Model Answer</button>
+      <div class="model-answer">
+        <strong>Sample dialogue:</strong><br><br>
+        <strong>Vous :</strong> Bonjour, je voudrais des informations sur les musées à visiter ce week-end.<br>
+        <strong>Employé :</strong> Bien sûr ! Vous pouvez visiter le musée d'Orsay ou le Louvre.<br>
+        <strong>Vous :</strong> C'est ouvert le dimanche ? À quelle heure ça ferme ?<br>
+        <strong>Employé :</strong> Le musée d'Orsay est ouvert jusqu'à 18h.<br>
+        <strong>Vous :</strong> Quel est le prix d'entrée ? Il y a une réduction pour les étudiants ?<br>
+        <strong>Employé :</strong> L'entrée coûte 16 euros, et 12 euros pour les moins de 18 ans.<br>
+        <strong>Vous :</strong> D'accord. Comment est-ce qu'on y va en métro ?<br>
+        <strong>Employé :</strong> Vous prenez la ligne 12, direction Mairie d'Issy, arrêt Solférino.<br>
+        <strong>Vous :</strong> Merci. Est-ce qu'il y a un café près du musée ?<br>
+        <strong>Employé :</strong> Oui, il y a un café juste en face.<br>
+        <strong>Vous :</strong> Parfait ! Vous avez une brochure à me donner ?<br>
+        <strong>Employé :</strong> Oui, voilà.<br>
+        <strong>Vous :</strong> Merci beaucoup, au revoir !
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: WRITING -->
+  <div id="tab-writing" class="tab-content">
+    <h2>Writing Practice</h2>
+    <p class="subtitle">Three exam-style tasks. Read the instructions carefully, note key vocabulary, then reveal the model answer.</p>
+
+    <!-- Writing 1 -->
+    <div class="practice-card">
+      <h3>Practice 1 — Écrire un message <span class="tag write">Email / Message</span></h3>
+      <div class="card-meta"> 60–80 words · Respond to a prompt</div>
+      <div class="writing-prompt">
+        <strong>Task:</strong> You have received this message from your French pen pal, Camille:<br><br>
+        <em>"Salut ! Je viens de déménager dans un nouvel appartement. C'est super ! Et toi, comment est ta maison ou ton appartement ? Tu as ta propre chambre ? Qu'est-ce que tu aimes faire chez toi le week-end ?"</em><br><br>
+        Write a reply to Camille (60–80 words). Describe your home, say whether you have your own room, and explain what you do at home at the weekend.
+      </div>
+      <div class="card-label">Key Vocabulary to Use</div>
+      <ul class="phrase-list">
+        <li>J'habite dans une maison / un appartement <span>I live in a house / a flat</span></li>
+        <li>Ma chambre est… (grande, petite, confortable) <span>My bedroom is…</span></li>
+        <li>J'ai / je n'ai pas ma propre chambre <span>I do / don't have my own room</span></li>
+        <li>Le week-end, je reste chez moi et je… <span>At the weekend, I stay home and…</span></li>
+        <li>Je regarde des films / j'écoute de la musique <span>I watch films / listen to music</span></li>
+      </ul>
+      <div class="criteria">
+        <strong>Marked on:</strong> <span>Responding to all 3 points</span> · correct greeting and sign-off · appropriate word count · grammar and vocabulary range
+      </div>
+      <button class="btn toggle" onclick="toggleModel(this)">Show Model Answer</button>
+      <div class="model-answer">
+        <strong>Model answer (~72 words):</strong><br><br>
+        Salut Camille !<br><br>
+        Félicitations pour ton nouvel appartement ! Moi, j'habite dans une maison avec ma famille. Elle n'est pas très grande, mais elle est confortable. J'ai ma propre chambre, c'est super ! Ma chambre est bleue et j'ai beaucoup de livres et de posters. Le week-end, j'aime rester chez moi. Je regarde des films sur mon ordinateur ou j'écoute de la musique avec mon frère. C'est très sympa !<br><br>
+        À bientôt,<br>
+        [Prénom]
+      </div>
+    </div>
+
+    <!-- Writing 2 -->
+    <div class="practice-card">
+      <h3>Practice 2 — Remplir un formulaire <span class="tag write">Form + Short Message</span></h3>
+      <div class="card-meta"> Form (complete all fields) + 40–60 word message</div>
+      <div class="writing-prompt">
+        <strong>Part A — Complete this registration form for a French language holiday camp:</strong><br><br>
+        Nom : _____________ &nbsp; Prénom : _____________<br>
+        Âge : _______ &nbsp; Nationalité : _____________<br>
+        Adresse e-mail : _____________<br>
+        Langues parlées : _____________<br>
+        Activités préférées (choisir 2) : □ sport &nbsp; □ musique &nbsp; □ théâtre &nbsp; □ cuisine<br>
+        Régime alimentaire particulier : □ végétarien &nbsp; □ sans gluten &nbsp; □ aucun<br><br>
+        <strong>Part B — Write a short message to the camp director (40–60 words)</strong>, introducing yourself and explaining why you want to attend the camp.
+      </div>
+      <div class="card-label">Key Phrases for Part B</div>
+      <ul class="phrase-list">
+        <li>Je m'appelle… et j'ai… ans. <span>I am… and I am… years old.</span></li>
+        <li>Je voudrais participer au stage parce que… <span>I would like to take part in the camp because…</span></li>
+        <li>Je parle… et j'apprends le français depuis… <span>I speak… and I have been learning French for…</span></li>
+        <li>J'aimerais améliorer mon français et rencontrer… <span>I would like to improve my French and meet…</span></li>
+      </ul>
+      <div class="criteria">
+        <strong>Marked on:</strong> <span>All form fields completed</span> · message addresses the task · correct register · grammar
+      </div>
+      <button class="btn toggle" onclick="toggleModel(this)">Show Model Answer</button>
+      <div class="model-answer">
+        <strong>Model form (example):</strong><br>
+        Nom : Sharma &nbsp; Prénom : Ananya &nbsp; Âge : 15 &nbsp; Nationalité : indienne<br>
+        Langues : anglais, hindi &nbsp; Activités : sport, musique &nbsp; Régime : aucun<br><br>
+        <strong>Model message (~52 words):</strong><br><br>
+        Madame, Monsieur,<br><br>
+        Je m'appelle Ananya Sharma et j'ai quinze ans. Je suis indienne et j'habite à Delhi. J'apprends le français depuis deux ans au collège. Je voudrais participer au stage parce que j'aime beaucoup le français et je voudrais améliorer mon niveau. J'aimerais aussi rencontrer des jeunes d'autres pays.<br><br>
+        Cordialement,<br>
+        Ananya Sharma
+      </div>
+    </div>
+
+    <!-- Writing 3 -->
+    <div class="practice-card">
+      <h3>Practice 3 — Écrire une carte postale <span class="tag write">Postcard</span></h3>
+      <div class="card-meta"> 60–80 words · Informal register</div>
+      <div class="writing-prompt">
+        <strong>Task:</strong> You are spending two weeks in the south of France with your family. Write a postcard to your French friend Jules (60–80 words). You must:<br><br>
+        • Say where you are and describe the place<br>
+        • Talk about the weather<br>
+        • Describe two activities you have done<br>
+        • Say what you are doing tomorrow
+      </div>
+      <div class="card-label">Key Vocabulary</div>
+      <ul class="phrase-list">
+        <li>Je suis en vacances à… depuis… jours <span>I have been on holiday in… for… days</span></li>
+        <li>Il fait très chaud / il y a du soleil <span>It is very hot / it is sunny</span></li>
+        <li>Hier, nous avons visité… / nous sommes allés… <span>Yesterday, we visited… / we went…</span></li>
+        <li>J'ai nagé dans la mer / bronzé sur la plage <span>I swam in the sea / sunbathed on the beach</span></li>
+        <li>Demain, on va… / je vais… <span>Tomorrow, we are going to…</span></li>
+        <li>C'est magnifique / super / incroyable ! <span>It is magnificent / great / incredible!</span></li>
+      </ul>
+      <div class="criteria">
+        <strong>Marked on:</strong> <span>All 4 bullet points addressed</span> · appropriate postcard format · informal tone · vocabulary range and accuracy
+      </div>
+      <button class="btn toggle" onclick="toggleModel(this)">Show Model Answer</button>
+      <div class="model-answer">
+        <strong>Model answer (~68 words):</strong><br><br>
+        Salut Jules !<br><br>
+        Je t'écris de Nice, dans le sud de la France. C'est une ville magnifique au bord de la mer Méditerranée ! Il fait très chaud ici — environ 30 degrés tous les jours. Hier, j'ai nagé dans la mer et j'ai bronzé sur la plage avec ma sœur. Le soir, nous avons mangé dans un bon restaurant. Demain, on va visiter Monaco — j'ai hâte !<br><br>
+        Bisous,<br>
+        [Prénom]
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: RESOURCES -->
+  <div id="tab-resources" class="tab-content">
+
+    <div class="resource-group">
+      <h2>Study Materials</h2>
+      <p>Downloadable documents — open directly in your browser.</p>
+      <a class="resource-link" href="https://drive.google.com/file/d/1cyz_dcd-l5skeLlOsLLcaS2z-PtLhOPI/view?usp=sharing" target="_blank" rel="noopener">
+        <span class="link-text">Important French Conjugations<span class="link-sub">Google Drive PDF</span></span>
+      </a>
+      <a class="resource-link" href="https://drive.google.com/file/d/1gNd-IRv-LrjEu1-pElQnUooZ6vUKm9m0/view?usp=sharing" target="_blank" rel="noopener">
+        <span class="link-text">Practice Sheet<span class="link-sub">Google Drive PDF</span></span>
+      </a>
+      <a class="resource-link" href="https://drive.google.com/file/d/1e1mHUdW67hcl1f8EW6fXmTGcQU870GET/view?usp=sharing" target="_blank" rel="noopener">
+        <span class="link-text">Course Book<span class="link-sub">Google Drive PDF</span></span>
+      </a>
+    </div>
+
+    <hr class="divider">
+
+    <div class="resource-group">
+      <h2>Official DELF Resources</h2>
+      <p>Free materials from official exam bodies.</p>
+      <a class="resource-link" href="https://www.france-education-international.fr/diplome/delf-prim" target="_blank" rel="noopener">
+        <span class="link-text">France Éducation International — Official DELF site<span class="link-sub">Sample papers, exam format, official information</span></span>
+      </a>
+      <a class="resource-link" href="https://www.ciep.fr/delf-tout-public/preparation-examen" target="_blank" rel="noopener">
+        <span class="link-text">DELF Exam Preparation<span class="link-sub">Official sample tests and marking grids</span></span>
+      </a>
+    </div>
+
+    <hr class="divider">
+
+    <div class="resource-group">
+      <h2>Free Practice Online</h2>
+      <p>Recommended websites and listening resources.</p>
+      <a class="resource-link" href="https://savoirs.rfi.fr/fr/apprendre-enseigner/langue-francaise/journal-en-francais-facile" target="_blank" rel="noopener">
+        <span class="link-text">RFI — Journal en français facile<span class="link-sub">Daily slow French audio with transcripts — great for listening practice</span></span>
+      </a>
+      <a class="resource-link" href="https://www.tv5monde.com/cms/chaine-francophone/Langue-Francaise/Apprendre-le-francais/p-1911-Exercices-de-francais.htm" target="_blank" rel="noopener">
+        <span class="link-text">TV5Monde — French exercises<span class="link-sub">Free grammar and comprehension exercises by level</span></span>
+      </a>
+      <a class="resource-link" href="https://quizlet.com/subject/delf-a2/" target="_blank" rel="noopener">
+        <span class="link-text">Quizlet — DELF A2 flashcard sets<span class="link-sub">Community-made vocabulary flashcards</span></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ WEEK ═══════════════════════════════ -->
+<div id="page-week" class="page">
+  <button class="btn back" onclick="show('home')">← Back to Home</button>
+  <h1 id="week-title"></h1>
+  <p class="subtitle" id="week-theme"></p>
+  <div id="day-list"></div>
+  <hr class="divider">
+  <button class="btn primary" onclick="startQuiz()">Take the Weekly Quiz →</button>
+</div>
+
+<!-- ═══════════════════════════════ DAY ════════════════════════════════ -->
+<div id="page-day" class="page">
+  <button class="btn back" id="day-back-btn">← Back to Week</button>
+  <h1 id="day-title"></h1>
+  <h3 id="day-theme"></h3>
+  <div id="day-vocab"></div>
+</div>
+
+<!-- ═══════════════════════════════ QUIZ ═══════════════════════════════ -->
+<div id="page-quiz" class="page">
+  <button class="btn back" id="quiz-back-btn">← Back to Week</button>
+  <h1 id="quiz-title"></h1>
+  <p class="subtitle">Choose the correct answer for each question</p>
+  <div id="quiz-questions"></div>
+  <div id="quiz-result" style="display:none"></div>
+  <button class="btn primary" id="quiz-submit" onclick="submitQuiz()" style="margin-top:1rem">Submit Answers</button>
+</div>
+
+<footer>
+  DELF A2 Master Resources · Not affiliated with DELF or Alliance Française · Educational use only
+</footer>
+
+<script>
+/* ── TAB NAVIGATION ── */
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+/* ── PAGE NAVIGATION ── */
+function show(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ── TOGGLE MODEL ANSWER ── */
+function toggleModel(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle('visible');
+  btn.textContent = box.classList.contains('visible') ? 'Hide Model Answer' : 'Show Model Answer';
+}
+
+/* ══════════════ VOCABULARY DATA ══════════════ */
+const data = {
+  weeks: [
+    {
+      title: "Week 1", theme: "People & Daily Life",
+      days: [
+        { title: "Day 1", theme: "Family & Relationships", vocab: [
+          ["la famille","the family"],["les parents","the parents"],["le frère","the brother"],
+          ["la sœur","the sister"],["le grand-père","the grandfather"],["la grand-mère","the grandmother"],
+          ["l'oncle","the uncle"],["la tante","the aunt"],["le cousin / la cousine","the cousin"],
+          ["le mari","the husband"],["la femme","the wife"],["l'enfant","the child"],
+          ["l'ami / l'amie","the friend"],["le voisin / la voisine","the neighbour"]
+        ]},
+        { title: "Day 2", theme: "Physical Description", vocab: [
+          ["grand(e)","tall"],["petit(e)","short"],["mince","slim"],["gros / grosse","fat"],
+          ["beau / belle","handsome / beautiful"],["les cheveux courts","short hair"],
+          ["les cheveux longs","long hair"],["les cheveux bouclés","curly hair"],
+          ["les yeux bleus","blue eyes"],["les yeux marrons","brown eyes"],
+          ["jeune","young"],["vieux / vieille","old"],["la barbe","the beard"],["les lunettes","glasses"]
+        ]},
+        { title: "Day 3", theme: "Personality", vocab: [
+          ["sympa","nice / friendly"],["gentil / gentille","kind"],["timide","shy"],
+          ["bavard(e)","talkative"],["sérieux / sérieuse","serious"],["drôle","funny"],
+          ["paresseux / paresseuse","lazy"],["intelligent(e)","intelligent"],
+          ["généreux / généreuse","generous"],["méchant(e)","mean"],
+          ["courageux / courageuse","brave"],["honnête","honest"]
+        ]},
+        { title: "Day 4", theme: "Daily Routine", vocab: [
+          ["se lever","to get up"],["se laver","to wash"],["s'habiller","to get dressed"],
+          ["prendre le petit-déjeuner","to have breakfast"],["aller à l'école","to go to school"],
+          ["rentrer","to come back home"],["dîner","to have dinner"],["se coucher","to go to bed"],
+          ["d'abord","first of all"],["ensuite","then"],["enfin","finally"],["tous les jours","every day"]
+        ]},
+        { title: "Day 5", theme: "Time & Frequency", vocab: [
+          ["toujours","always"],["souvent","often"],["parfois","sometimes"],
+          ["rarement","rarely"],["jamais","never"],["le matin","in the morning"],
+          ["l'après-midi","in the afternoon"],["le soir","in the evening"],
+          ["tôt","early"],["tard","late"],["maintenant","now"],
+          ["bientôt","soon"],["hier","yesterday"],["demain","tomorrow"]
+        ]}
+      ],
+      quiz: [
+        { q:"Quel mot signifie 'the neighbour' ?", options:["le cousin","le voisin","l'oncle","le frère"], answer:1 },
+        { q:"Comment dit-on 'curly hair' en français ?", options:["les cheveux longs","les cheveux blonds","les cheveux bouclés","les cheveux courts"], answer:2 },
+        { q:"'Paresseux' signifie…", options:["brave","talkative","lazy","kind"], answer:2 },
+        { q:"Choisissez le contraire de 'toujours'.", options:["souvent","parfois","maintenant","jamais"], answer:3 },
+        { q:"Quelle phrase signifie 'to get dressed' ?", options:["se lever","s'habiller","se coucher","se laver"], answer:1 },
+        { q:"'Demain' signifie…", options:["yesterday","now","tomorrow","soon"], answer:2 },
+        { q:"Quel adjectif signifie 'generous' ?", options:["sérieux","méchant","généreux","timide"], answer:2 },
+        { q:"'Le petit-déjeuner' est…", options:["lunch","dinner","snack","breakfast"], answer:3 },
+        { q:"Que signifie 'ensuite' ?", options:["finally","first","then","never"], answer:2 },
+        { q:"'Les yeux marrons' signifie…", options:["green eyes","blue eyes","brown eyes","black eyes"], answer:2 }
+      ]
+    },
+    {
+      title: "Week 2", theme: "Places & Transport",
+      days: [
+        { title: "Day 1", theme: "In Town", vocab: [
+          ["la mairie","the town hall"],["la bibliothèque","the library"],["la poste","the post office"],
+          ["la gare","the train station"],["le supermarché","the supermarket"],
+          ["la pharmacie","the pharmacy"],["le marché","the market"],
+          ["l'hôpital","the hospital"],["la boulangerie","the bakery"],
+          ["l'église","the church"],["le stade","the stadium"],["la piscine","the swimming pool"]
+        ]},
+        { title: "Day 2", theme: "Directions", vocab: [
+          ["tourner à gauche","turn left"],["tourner à droite","turn right"],
+          ["aller tout droit","go straight ahead"],["traverser","to cross"],
+          ["prendre la rue","take the street"],["au bout de","at the end of"],
+          ["en face de","opposite"],["à côté de","next to"],
+          ["près de","near"],["loin de","far from"],["entre","between"],["continuer","to continue"]
+        ]},
+        { title: "Day 3", theme: "Transport", vocab: [
+          ["le bus","the bus"],["le métro","the underground"],["le train","the train"],
+          ["le vélo","the bicycle"],["la voiture","the car"],["à pied","on foot"],
+          ["le billet","the ticket"],["la station","the station"],["l'arrêt","the stop"],
+          ["monter","to get on"],["descendre","to get off"],["rater","to miss (a bus/train)"]
+        ]},
+        { title: "Day 4", theme: "At Home", vocab: [
+          ["le salon","the living room"],["la cuisine","the kitchen"],["la chambre","the bedroom"],
+          ["la salle de bains","the bathroom"],["le jardin","the garden"],
+          ["les meubles","the furniture"],["le canapé","the sofa"],
+          ["l'armoire","the wardrobe"],["le rideau","the curtain"],
+          ["habiter","to live"],["louer","to rent"],["déménager","to move house"]
+        ]},
+        { title: "Day 5", theme: "Prepositions & Expressions", vocab: [
+          ["à droite","on the right"],["à gauche","on the left"],["devant","in front of"],
+          ["derrière","behind"],["sur","on"],["sous","under"],["dans","in"],
+          ["il y a","there is / there are"],["c'est loin ?","is it far?"],
+          ["où se trouve…?","where is…?"],["pour aller à…?","how do I get to…?"],
+          ["je cherche","I'm looking for"]
+        ]}
+      ],
+      quiz: [
+        { q:"Où achète-t-on du pain ?", options:["la pharmacie","la mairie","la boulangerie","le stade"], answer:2 },
+        { q:"'Aller tout droit' signifie…", options:["turn right","go straight ahead","turn left","cross the road"], answer:1 },
+        { q:"Comment dit-on 'the ticket' ?", options:["la station","l'arrêt","le billet","le trajet"], answer:2 },
+        { q:"'En face de' signifie…", options:["next to","behind","opposite","near"], answer:2 },
+        { q:"On dort dans…", options:["le salon","la cuisine","la salle de bains","la chambre"], answer:3 },
+        { q:"'Rater le bus' signifie…", options:["to take the bus","to miss the bus","to wait for the bus","to get off the bus"], answer:1 },
+        { q:"Quel moyen de transport se prend sous terre ?", options:["le vélo","la voiture","le métro","le train"], answer:2 },
+        { q:"'Louer' signifie…", options:["to buy","to sell","to rent","to move"], answer:2 },
+        { q:"'Au bout de la rue' signifie…", options:["in the middle of the street","at the end of the street","next to the street","behind the street"], answer:1 },
+        { q:"Où trouve-t-on des médicaments ?", options:["la poste","la pharmacie","le marché","la bibliothèque"], answer:1 }
+      ]
+    },
+    {
+      title: "Week 3", theme: "School & Work",
+      days: [
+        { title: "Day 1", theme: "School Subjects", vocab: [
+          ["les mathématiques","mathematics"],["le français","French"],["l'histoire","history"],
+          ["la géographie","geography"],["les sciences","science"],["l'anglais","English"],
+          ["la musique","music"],["le dessin","art / drawing"],["le sport / l'EPS","PE"],
+          ["la philosophie","philosophy"],["l'informatique","IT / computing"],["la biologie","biology"]
+        ]},
+        { title: "Day 2", theme: "In the Classroom", vocab: [
+          ["la matière","the subject"],["les devoirs","homework"],["la récréation","break time"],
+          ["le professeur","the teacher"],["le cahier","the exercise book"],
+          ["la note","the mark / grade"],["l'examen","the exam"],
+          ["réussir","to pass"],["échouer","to fail"],["apprendre","to learn"],
+          ["expliquer","to explain"],["comprendre","to understand"]
+        ]},
+        { title: "Day 3", theme: "Jobs", vocab: [
+          ["le médecin","the doctor"],["l'infirmier / l'infirmière","the nurse"],
+          ["le professeur","the teacher"],["le cuisinier / la cuisinière","the cook"],
+          ["le vendeur / la vendeuse","the salesperson"],["l'architecte","the architect"],
+          ["le journaliste","the journalist"],["l'acteur / l'actrice","the actor / actress"],
+          ["le pompier","the firefighter"],["l'avocat / l'avocate","the lawyer"],
+          ["le mécanicien","the mechanic"],["le boulanger","the baker"]
+        ]},
+        { title: "Day 4", theme: "Work Vocabulary", vocab: [
+          ["travailler","to work"],["le bureau","the office"],["le salaire","the salary"],
+          ["le chef","the boss"],["la réunion","the meeting"],["le collègue","the colleague"],
+          ["l'entreprise","the company"],["la candidature","the application"],
+          ["l'entretien","the interview"],["le contrat","the contract"],
+          ["les congés","the holidays / leave"],["être au chômage","to be unemployed"]
+        ]},
+        { title: "Day 5", theme: "Useful Verbs", vocab: [
+          ["chercher","to look for"],["trouver","to find"],["envoyer","to send"],
+          ["recevoir","to receive"],["lire","to read"],["écrire","to write"],
+          ["corriger","to correct"],["noter","to note / to mark"],
+          ["poser une question","to ask a question"],["répondre","to answer"],
+          ["participer","to participate"],["organiser","to organise"]
+        ]}
+      ],
+      quiz: [
+        { q:"Quelle matière étudie les chiffres et les formes ?", options:["l'histoire","les mathématiques","la biologie","le dessin"], answer:1 },
+        { q:"'Réussir l'examen' signifie…", options:["to fail the exam","to sit the exam","to pass the exam","to miss the exam"], answer:2 },
+        { q:"Qui soigne les malades à l'hôpital ?", options:["le boulanger","l'avocat","le médecin","le mécanicien"], answer:2 },
+        { q:"'Les devoirs' sont…", options:["the exams","the marks","the homework","the breaks"], answer:2 },
+        { q:"Comment dit-on 'the salary' ?", options:["le contrat","le salaire","le bureau","la réunion"], answer:1 },
+        { q:"'Comprendre' signifie…", options:["to explain","to learn","to understand","to correct"], answer:2 },
+        { q:"Qui défend les clients au tribunal ?", options:["le pompier","le journaliste","l'avocat","l'infirmier"], answer:2 },
+        { q:"'Être au chômage' signifie…", options:["to be on holiday","to be unemployed","to be promoted","to retire"], answer:1 },
+        { q:"'La récréation' est…", options:["a lesson","a subject","break time","an exam"], answer:2 },
+        { q:"Que signifie 'envoyer' ?", options:["to receive","to read","to send","to write"], answer:2 }
+      ]
+    },
+    {
+      title: "Week 4", theme: "Food, Health & Hobbies",
+      days: [
+        { title: "Day 1", theme: "Food & Meals", vocab: [
+          ["le petit-déjeuner","breakfast"],["le déjeuner","lunch"],["le dîner","dinner"],
+          ["les légumes","vegetables"],["les fruits","fruit"],["la viande","meat"],
+          ["le poisson","fish"],["le pain","bread"],["le fromage","cheese"],
+          ["les pâtes","pasta"],["le riz","rice"],["délicieux / délicieuse","delicious"]
+        ]},
+        { title: "Day 2", theme: "At the Restaurant", vocab: [
+          ["commander","to order"],["l'entrée","the starter"],["le plat principal","the main course"],
+          ["le dessert","the dessert"],["l'addition","the bill"],["avoir faim","to be hungry"],
+          ["avoir soif","to be thirsty"],["végétarien / végétarienne","vegetarian"],
+          ["la carte","the menu"],["une table pour deux","a table for two"],
+          ["c'est compris ?","is it included?"],["le pourboire","the tip"]
+        ]},
+        { title: "Day 3", theme: "Health", vocab: [
+          ["avoir mal à la tête","to have a headache"],["avoir mal au ventre","to have a stomachache"],
+          ["la fièvre","fever"],["le médecin","the doctor"],["l'ordonnance","the prescription"],
+          ["le médicament","the medicine"],["se reposer","to rest"],
+          ["se sentir bien","to feel well"],["se sentir mal","to feel unwell"],
+          ["fatigué(e)","tired"],["guérir","to recover"],["l'allergie","allergy"]
+        ]},
+        { title: "Day 4", theme: "Sports & Hobbies", vocab: [
+          ["la lecture","reading"],["le dessin","drawing"],["la musique","music"],
+          ["jouer de la guitare","to play guitar"],["jouer au football","to play football"],
+          ["nager","to swim"],["courir","to run"],["le cinéma","cinema"],
+          ["le théâtre","theatre"],["collectionner","to collect"],
+          ["s'intéresser à","to be interested in"],["préférer","to prefer"]
+        ]},
+        { title: "Day 5", theme: "Free Time & Weekend", vocab: [
+          ["le week-end","the weekend"],["sortir","to go out"],["rester à la maison","to stay home"],
+          ["inviter des amis","to invite friends"],["regarder un film","to watch a film"],
+          ["écouter de la musique","to listen to music"],["faire une promenade","to go for a walk"],
+          ["visiter","to visit"],["se détendre","to relax"],["s'amuser","to have fun"],
+          ["passer du temps","to spend time"],["ensemble","together"]
+        ]}
+      ],
+      quiz: [
+        { q:"'L'addition' au restaurant c'est…", options:["the menu","the tip","the bill","the starter"], answer:2 },
+        { q:"Que signifie 'avoir faim' ?", options:["to be thirsty","to be full","to be hungry","to be tired"], answer:2 },
+        { q:"'Le plat principal' est…", options:["the dessert","the starter","the side dish","the main course"], answer:3 },
+        { q:"Comment dit-on 'fever' en français ?", options:["l'allergie","la fièvre","le médicament","l'ordonnance"], answer:1 },
+        { q:"'Se reposer' signifie…", options:["to exercise","to rest","to recover","to sleep"], answer:1 },
+        { q:"Quel verbe signifie 'to swim' ?", options:["courir","nager","jouer","collectionner"], answer:1 },
+        { q:"'Délicieux' décrit…", options:["something ugly","something boring","something tasty","something expensive"], answer:2 },
+        { q:"'Se sentir mal' signifie…", options:["to feel well","to feel bored","to feel unwell","to feel hungry"], answer:2 },
+        { q:"'Ensemble' signifie…", options:["alone","later","together","outside"], answer:2 },
+        { q:"'Guérir' signifie…", options:["to be sick","to rest","to visit the doctor","to recover"], answer:3 }
+      ]
+    },
+    {
+      title: "Week 5", theme: "Nature, Weather & Animals",
+      days: [
+        { title: "Day 1", theme: "Weather", vocab: [
+          ["il fait beau","the weather is nice"],["il fait mauvais","the weather is bad"],
+          ["il fait chaud","it is hot"],["il fait froid","it is cold"],
+          ["il pleut","it is raining"],["il neige","it is snowing"],
+          ["il y a du vent","it is windy"],["il y a du soleil","it is sunny"],
+          ["il y a des nuages","it is cloudy"],["l'orage","the storm"],
+          ["le brouillard","the fog"],["la température","the temperature"]
+        ]},
+        { title: "Day 2", theme: "Seasons & Months", vocab: [
+          ["le printemps","spring"],["l'été","summer"],["l'automne","autumn"],["l'hiver","winter"],
+          ["janvier","January"],["février","February"],["mars","March"],["avril","April"],
+          ["mai","May"],["juin","June"],["juillet","July"],["août","August"]
+        ]},
+        { title: "Day 3", theme: "Nature", vocab: [
+          ["la montagne","the mountain"],["la mer","the sea"],["la plage","the beach"],
+          ["la forêt","the forest"],["le lac","the lake"],["la rivière","the river"],
+          ["le champ","the field"],["la fleur","the flower"],["l'arbre","the tree"],
+          ["l'herbe","the grass"],["le rocher","the rock"],["le ciel","the sky"]
+        ]},
+        { title: "Day 4", theme: "Animals", vocab: [
+          ["le chien","the dog"],["le chat","the cat"],["le cheval","the horse"],
+          ["l'oiseau","the bird"],["le poisson","the fish"],["le lapin","the rabbit"],
+          ["la vache","the cow"],["le mouton","the sheep"],["le cochon","the pig"],
+          ["l'éléphant","the elephant"],["le lion","the lion"],["le singe","the monkey"]
+        ]},
+        { title: "Day 5", theme: "Environment & Ecology", vocab: [
+          ["l'environnement","the environment"],["recycler","to recycle"],
+          ["les déchets","waste / rubbish"],["polluer","to pollute"],
+          ["la nature","nature"],["protéger","to protect"],
+          ["l'énergie","energy"],["l'eau","water"],["l'air","air"],
+          ["le soleil","the sun"],["planter un arbre","to plant a tree"],["économiser","to save / economise"]
+        ]}
+      ],
+      quiz: [
+        { q:"'Il neige' signifie…", options:["it is sunny","it is raining","it is snowing","it is windy"], answer:2 },
+        { q:"Quel mot signifie 'autumn' ?", options:["le printemps","l'été","l'hiver","l'automne"], answer:3 },
+        { q:"Comment dit-on 'the forest' ?", options:["la mer","la forêt","le lac","le champ"], answer:1 },
+        { q:"Quel animal dit 'miaou' ?", options:["le chien","le cheval","le chat","le lapin"], answer:2 },
+        { q:"'Il fait chaud' décrit…", options:["cold weather","hot weather","rainy weather","windy weather"], answer:1 },
+        { q:"'Recycler' signifie…", options:["to pollute","to protect","to recycle","to save"], answer:2 },
+        { q:"'Le ciel' signifie…", options:["the sea","the cloud","the sky","the sun"], answer:2 },
+        { q:"Quel mois suit juillet ?", options:["juin","septembre","août","mai"], answer:2 },
+        { q:"'L'orage' est…", options:["sunshine","fog","a storm","snow"], answer:2 },
+        { q:"'Protéger' l'environnement signifie…", options:["to pollute it","to protect it","to ignore it","to study it"], answer:1 }
+      ]
+    },
+    {
+      title: "Week 6", theme: "Shopping, Media & Travel",
+      days: [
+        { title: "Day 1", theme: "Shopping", vocab: [
+          ["faire les courses","to do the shopping"],["le magasin","the shop"],
+          ["le prix","the price"],["cher / chère","expensive"],["bon marché","cheap"],
+          ["payer","to pay"],["la caisse","the checkout"],["le rayon","the aisle / section"],
+          ["la promotion","the special offer"],["l'étiquette","the price tag"],
+          ["rendre la monnaie","to give change"],["un sac","a bag"]
+        ]},
+        { title: "Day 2", theme: "Clothes", vocab: [
+          ["le vêtement","clothing"],["la robe","the dress"],["le pantalon","the trousers"],
+          ["la chemise","the shirt"],["le pull","the jumper"],["la veste","the jacket"],
+          ["les chaussures","the shoes"],["les chaussettes","the socks"],
+          ["la taille","the size"],["essayer","to try on"],["porter","to wear"],["à la mode","fashionable"]
+        ]},
+        { title: "Day 3", theme: "Media & Technology", vocab: [
+          ["le téléphone portable","the mobile phone"],["l'ordinateur","the computer"],
+          ["Internet","the internet"],["envoyer un message","to send a message"],
+          ["télécharger","to download"],["les réseaux sociaux","social media"],
+          ["la télévision","television"],["la radio","the radio"],
+          ["le journal","the newspaper"],["une photo","a photo"],
+          ["chercher en ligne","to search online"],["regarder","to watch"]
+        ]},
+        { title: "Day 4", theme: "Travel & Holidays", vocab: [
+          ["les vacances","the holidays"],["partir en voyage","to go on a trip"],
+          ["réserver","to book"],["l'hôtel","the hotel"],["la plage","the beach"],
+          ["la montagne","the mountain"],["visiter","to visit"],
+          ["un souvenir","a souvenir"],["bronzer","to sunbathe"],
+          ["se baigner","to swim / bathe"],["faire du camping","to go camping"],
+          ["l'étranger","abroad / foreign countries"]
+        ]},
+        { title: "Day 5", theme: "Opinions & Expressions", vocab: [
+          ["je pense que","I think that"],["à mon avis","in my opinion"],
+          ["je suis d'accord","I agree"],["je ne suis pas d'accord","I disagree"],
+          ["c'est bien","it's good"],["c'est mauvais","it's bad"],
+          ["j'aime bien","I quite like"],["je n'aime pas","I don't like"],
+          ["c'est intéressant","it's interesting"],["c'est ennuyeux","it's boring"],
+          ["peut-être","maybe"],["bien sûr","of course"]
+        ]}
+      ],
+      quiz: [
+        { q:"'Faire les courses' signifie…", options:["to do sport","to do the shopping","to go to school","to do homework"], answer:1 },
+        { q:"'Bon marché' signifie…", options:["expensive","second-hand","cheap","fashionable"], answer:2 },
+        { q:"Comment dit-on 'the jumper' ?", options:["la veste","la chemise","le pull","la robe"], answer:2 },
+        { q:"'Essayer' des vêtements signifie…", options:["to wear","to buy","to try on","to return"], answer:2 },
+        { q:"'Télécharger' signifie…", options:["to upload","to watch","to download","to search"], answer:2 },
+        { q:"'Réserver un hôtel' signifie…", options:["to visit a hotel","to leave a hotel","to book a hotel","to pay for a hotel"], answer:2 },
+        { q:"'À mon avis' signifie…", options:["in my bag","in my opinion","in my room","in my experience"], answer:1 },
+        { q:"'Je suis d'accord' signifie…", options:["I don't know","I disagree","I agree","I think"], answer:2 },
+        { q:"'Bronzer' signifie…", options:["to swim","to sunbathe","to rest","to camp"], answer:1 },
+        { q:"'Les réseaux sociaux' sont…", options:["news channels","social media","radio stations","newspapers"], answer:1 }
+      ]
+    }
+  ]
+};
+
+let currentWeek = 0;
+let userAnswers = {};
+
+function renderHome() {
+  const list = document.getElementById('week-list');
+  list.innerHTML = '';
+  data.weeks.forEach((w, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.innerHTML = '<strong>' + w.title + '</strong><span class="tag">' + w.theme + '</span>';
+    btn.onclick = () => openWeek(i);
+    list.appendChild(btn);
+  });
+}
+
+function openWeek(i) {
+  currentWeek = i;
+  const w = data.weeks[i];
+  document.getElementById('week-title').textContent = w.title + ' — ' + w.theme;
+  document.getElementById('week-theme').textContent = w.days.length + ' days of vocabulary';
+  const list = document.getElementById('day-list');
+  list.innerHTML = '';
+  w.days.forEach((d, j) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.innerHTML = '<strong>' + d.title + '</strong><span class="tag">' + d.theme + '</span>';
+    btn.onclick = () => openDay(i, j);
+    list.appendChild(btn);
+  });
+  show('week');
+}
+
+function openDay(wi, di) {
+  currentWeek = wi;
+  const d = data.weeks[wi].days[di];
+  document.getElementById('day-title').textContent = data.weeks[wi].title + ' · ' + d.title;
+  document.getElementById('day-theme').textContent = d.theme;
+  document.getElementById('day-back-btn').onclick = () => openWeek(wi);
+  const container = document.getElementById('day-vocab');
+  container.innerHTML = '';
+  const section = document.createElement('div');
+  section.className = 'vocab-section';
+  const table = document.createElement('table');
+  table.className = 'vocab-table';
+  d.vocab.forEach(([fr, en]) => {
+    const row = document.createElement('tr');
+    row.innerHTML = '<td>' + fr + '</td><td>' + en + '</td>';
+    table.appendChild(row);
+  });
+  section.appendChild(table);
+  container.appendChild(section);
+  show('day');
+}
+
+function startQuiz() {
+  const w = data.weeks[currentWeek];
+  document.getElementById('quiz-title').textContent = w.title + ' Quiz — ' + w.theme;
+  document.getElementById('quiz-back-btn').onclick = () => openWeek(currentWeek);
+  const container = document.getElementById('quiz-questions');
+  container.innerHTML = '';
+  userAnswers = {};
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('quiz-submit').style.display = 'block';
+  w.quiz.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.innerHTML = '<p>' + (qi + 1) + '. ' + q.q + '</p>';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.className = 'option';
+      btn.textContent = opt;
+      btn.dataset.qi = qi;
+      btn.dataset.oi = oi;
+      btn.onclick = function() {
+        document.querySelectorAll('[data-qi="' + qi + '"]').forEach(b => b.classList.remove('selected-opt'));
+        this.classList.add('selected-opt');
+        userAnswers[qi] = oi;
+      };
+      div.appendChild(btn);
+    });
+    container.appendChild(div);
+  });
+  show('quiz');
+}
+
+function submitQuiz() {
+  const w = data.weeks[currentWeek];
+  const total = w.quiz.length;
+  let score = 0;
+  w.quiz.forEach((q, qi) => {
+    const buttons = document.querySelectorAll('[data-qi="' + qi + '"]');
+    const chosen = userAnswers[qi];
+    buttons.forEach(btn => {
+      btn.disabled = true;
+      const oi = parseInt(btn.dataset.oi);
+      if (oi === q.answer) btn.classList.add('correct');
+      else if (oi === chosen && chosen !== q.answer) btn.classList.add('wrong');
+    });
+    if (chosen === q.answer) score++;
+  });
+  const result = document.getElementById('quiz-result');
+  result.style.display = 'block';
+  const msg = score === total ? 'Perfect score! Excellent work.'
+    : score >= total * 0.7 ? 'Well done! Keep revising the ones you missed.'
+    : 'Keep practising — review the vocabulary and try again.';
+  result.innerHTML = '<strong>Score: ' + score + ' / ' + total + '</strong><br>' + msg;
+  document.getElementById('quiz-submit').style.display = 'none';
+}
+
+renderHome();
+</script>
+</body>
+</html>
